@@ -176,16 +176,16 @@ w.Gender AS doctor_gender,
 w.Salary AS doctor_salary
 FROM DOCTOR AS D
 
-INNER JOIN WORKER AS W
+FULL JOIN WORKER AS W
 ON W.Worker_id=D.Worker_id
 
-INNER JOIN DOCTOR_PATIONT AS DP
+FULL JOIN DOCTOR_PATIONT AS DP
 ON DP.Doctor_id=D.doctor_id 
 
-INNER JOIN DEPARTMENT AS DE
+FULL JOIN DEPARTMENT AS DE
 ON DE.Department_id=D.Department_id
 
-INNER JOIN PATIONT AS P
+FULL JOIN PATIONT AS P
 ON P.Pationt_id=DP.Pationt_id
 
 WHERE p.Age>12 AND Time !=2022
