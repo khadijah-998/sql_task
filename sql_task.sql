@@ -144,30 +144,50 @@ SELECT Expiration_date,
 CASE 
 WHEN Expiration_date <GETDATE() THEN 'Active'
 ELSE 'Expired' END AS Midication_Expierd_Or_Not
-FROM MEDICATION; 
+FROM MEDICATION;
+ 
 
 
 SELECT 
-    D.Doctor_id,
-    D.Field,
-    D.Degree,
-    D.Worker_id,
-    DE.Department_id,
-    DE.Workers,
-    DE.Building_location,
-    DP.Patient_id,
-    DP.Time,
-    W.Name AS Doctor_Name,
-    W.Phone_number AS Doctor_Phone,
-    W.Gender AS Doctor_Gender,
-    W.Salary AS Doctor_Salary
-FROM 
-    DOCTOR D, WORKER W, DOCTOR_PATIENT DP, DEPARTMENT DE
-WHERE 
-    D.Worker_id = W.Worker_id
-    AND D.Doctor_id = DP.Doctor_id
-    AND D.Department_id = DE.Department_id
-    AND P.Age > 12
-    AND DP.Time <> 2022
-ORDER BY 
-    P.Name ASC, W.Name DESC;
+D.Doctor_id ,
+D.Field ,
+D.Degree ,
+D.worker_id ,
+
+DE.Department_id ,
+DE.Workers  ,
+DE.Bulding_location ,
+
+P.Pationt_id,
+P.Contact_number ,
+P.Name ,
+P.Address,
+P.Gender,
+P.Age ,
+P.Blod_type ,
+P.Cafeteria_id,
+P.Bill_ID ,
+
+DP.Time,
+
+W.Name AS doctor_Name ,
+w.Phone_number AS doctor_phone,
+w.Gender AS doctor_gender,
+w.Salary AS doctor_salary
+FROM DOCTOR AS D
+
+INNER JOIN WORKER AS W
+ON W.Worker_id=D.Worker_id
+
+INNER JOIN DOCTOR_PATIONT AS DP
+ON DP.Doctor_id=D.doctor_id 
+
+INNER JOIN DEPARTMENT AS DE
+ON DE.Department_id=D.Department_id
+
+INNER JOIN PATIONT AS P
+ON P.Pationt_id=DP.Pationt_id
+
+WHERE p.Age>12 AND Time !=2022
+GROUP BY P.Pationt_id
+ORDER by p.Name , W.Name DESC;
