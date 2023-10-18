@@ -142,7 +142,8 @@ CASE
 WHEN M.Expiration_date <GETDATE() THEN 'Active'
 ELSE 'Expired' END AS Midication_Expierd_Or_Not
 FROM MEDICATION AS M 
-INNER JOIN MEDICATION_PRESCRIBED AS MP
+FULL JOIN MEDICATION_PRESCRIBED AS MP
+ON MP.Medication_id= M.Medication_id
 GROUP BY M.Medication_id;
  
 
