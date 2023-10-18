@@ -142,7 +142,7 @@ CASE
 WHEN M.Expiration_date <GETDATE() THEN 'Active'
 ELSE 'Expired' END AS Midication_Expierd_Or_Not
 FROM MEDICATION AS M 
-FULL JOIN MEDICATION_PRESCRIBED AS MP
+LEFT JOIN MEDICATION_PRESCRIBED AS MP
 ON MP.Medication_id= M.Medication_id
 GROUP BY M.Medication_id;
  
@@ -176,16 +176,16 @@ w.Gender AS doctor_gender,
 w.Salary AS doctor_salary
 FROM DOCTOR AS D
 
-FULL JOIN WORKER AS W
+LEFT JOIN WORKER AS W
 ON W.Worker_id=D.Worker_id
 
-FULL JOIN DOCTOR_PATIONT AS DP
+LEFT JOIN DOCTOR_PATIONT AS DP
 ON DP.Doctor_id=D.doctor_id 
 
-FULL JOIN DEPARTMENT AS DE
+LEFT JOIN DEPARTMENT AS DE
 ON DE.Department_id=D.Department_id
 
-FULL JOIN PATIONT AS P
+LEFT JOIN PATIONT AS P
 ON P.Pationt_id=DP.Pationt_id
 
 WHERE p.Age>12 AND Time !=2022
