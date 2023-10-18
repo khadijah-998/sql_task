@@ -134,12 +134,79 @@ FOREIGN KEY (Illness) REFERENCES DIAGNOSIS(Illness)
 
 );
 
+INSERT INTO DEPARTMENT (Department_id, Workers, Bulding_location)
+VALUES
+(1, 'Department 1 Workers', 'Location 1'),
+(2, 'Department 2 Workers', 'Location 2');
+
+INSERT INTO WORKER (Worker_id, Name, Phone_number, Gender, Salary)
+VALUES
+(1, 'John Doe', '123-456-7890', 'Male', '50000'),
+(2, 'Jane Smith', '987-654-3210', 'Female', '45000');
+
+INSERT INTO DOCTOR (Doctor_id, Field, Degree, worker_id, Department_id)
+VALUES
+(1, 'Cardiology', 'MD', 1, 1),
+(2, 'Orthopedics', 'MD', 2, 1);
+
+INSERT INTO STUFF (Stuff_id, Job_title, worker_id)
+VALUES
+(1, 'Nurse', 3),
+(2, 'Cafeteria Staff', 4);
+
+INSERT INTO MEDICATION (Medication_id, Doses, Expiration_date)
+VALUES
+(1, '10mg', '2023-12-31'),
+(2, '20mg', '2023-11-30');
+
+INSERT INTO BILL (Bill_ID, Tests, Tretment_type, Time_Admitted, Prescription)
+VALUES
+(1, 'Blood Test', 'Inpatient', '2023-10-18', 'Medication 1'),
+(2, 'X-ray', 'Outpatient', '2023-10-19', 'Medication 2');
+
+INSERT INTO CAFETERIA (Cafeteria_id, Food_type, Seating)
+VALUES
+(1, 'Cafeteria 1 Food', 'Indoor'),
+(2, 'Cafeteria 2 Food', 'Outdoor');
+
+INSERT INTO cafeteria_stuff (Cafeteria_id, Stuff_id, Position)
+VALUES
+(1, 1, 'Nurse'),
+(2, 2, 'Cafeteria Staff');
 
 
+INSERT INTO PATIONT (Pationt_id, Contact_number, Name, Address, Gender, Age, Blod_type, Cafeteria_id, Bill_ID)
+VALUES
+(1, 1234567890, 'Patient 1', 'Address 1', 'Male', 35, 'A+', 1, 1),
+(2, 9876543210, 'Patient 2', 'Address 2', 'Female', 45, 'B-', 2, 2);
 
-SELECT COUNT (MP.Pationt_id) AS count
-CASE  
-WHEN M.Expiration_date <GETDATE() THEN 'Active'
+
+INSERT INTO MEDICATION_PRESCRIBED (PRESCRIBED_id, Medication_id, Pationt_id)
+VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+
+INSERT INTO DOCTOR_PATIONT (Pationt_id, Doctor_id, Time)
+VALUES
+(1, 1, '2023-10-18'),
+(2, 2, '2023-10-19');
+
+
+INSERT INTO DIAGNOSIS (Illness, Pationt_id, Doctor_id)
+VALUES
+('Fever', 1, 1),
+('Fractured Arm', 2, 2);
+
+
+INSERT INTO TESTS (Test_id, Result, Illness, Pationt_id, Doctor_id)
+VALUES
+(1, 'Positive', 'Fever', 1, 1),
+(2, 'Fracture Confirmed', 'Fractured Arm', 2, 2);
+
+
+SELECT COUNT(MP.Pationt_id) AS "pationt_count",
+CASE WHEN M.Expiration_date < CURRENT_DATE THEN 'Active'
 ELSE 'Expired' END AS Midication_Expierd_Or_Not
 FROM MEDICATION AS M 
 LEFT JOIN MEDICATION_PRESCRIBED AS MP
@@ -188,6 +255,5 @@ ON DE.Department_id=D.Department_id
 LEFT JOIN PATIONT AS P
 ON P.Pationt_id=DP.Pationt_id
 
-WHERE p.Age>12 AND Time !=2022
-GROUP BY P.Pationt_id
+WHERE p.Age>12 AND DP.Time !=2022
 ORDER by p.Name , W.Name DESC;
