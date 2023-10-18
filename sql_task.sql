@@ -138,13 +138,11 @@ FOREIGN KEY (Illness) REFERENCES DIAGNOSIS(Illness)
 
 
 SELECT COUNT (*) AS count
-FROM MEDICATION;
-
-SELECT Expiration_date,
 CASE 
 WHEN Expiration_date <GETDATE() THEN 'Active'
 ELSE 'Expired' END AS Midication_Expierd_Or_Not
-FROM MEDICATION;
+FROM MEDICATION
+GROUP BY Medication_id;
  
 
 
